@@ -24,6 +24,9 @@ const TESTIMONIALS = [
   { name: "Ayesha Khan", city: "Lahore", service: "Bridal Mehndi", text: "Absolutely stunning bridal mehndi! Afshi's attention to detail is unmatched. My wedding mehndi was exactly what I dreamed of." },
   { name: "Fatima Sheikh", city: "Karachi", service: "Abaya", text: "The quality of abayas is exceptional. Perfect stitching, premium fabric, and modest designs. Highly recommend!" },
   { name: "Sara Ahmed", city: "Islamabad", service: "Teenage Mehndi", text: "Beautiful mehndi design for my sister's birthday. The artist was professional and the design lasted for weeks." },
+  { name: "Zainab Malik", city: "Faisalabad", service: "Bridal Mehndi", text: "Professional service and stunning designs. The mehndi stayed dark for weeks. Highly recommended for all occasions!" },
+  { name: "Noor Fatima", city: "Rawalpindi", service: "Abaya", text: "Elegant abayas with perfect fitting. The fabric quality is amazing and the designs are unique. Will definitely order again!" },
+  { name: "Maryam Ali", city: "Multan", service: "Kids Mehndi", text: "My daughter loved her mehndi design! Fun patterns and very gentle artist. She was so happy with the result." },
 ];
 
 /* ─── COMPONENTS ─────────────────────────────────────────────────────────────── */
@@ -210,13 +213,13 @@ function AbayaShowcase() {
   const [selectedAbaya, setSelectedAbaya] = useState<any>(null);
 
   return (
-    <section id="abayas" className="py-28 bg-gradient-to-b from-gray-950 to-black">
+    <section id="abayas" className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-gray-950 to-black">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-full px-5 py-2 mb-6">
             <span className="text-amber-500 text-sm font-medium tracking-widest">NEW COLLECTION</span>
           </div>
-          <h2 className="font-serif text-6xl text-white">Premium Abayas</h2>
+          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-white">Premium Abayas</h2>
           <p className="mt-4 text-gray-400 max-w-2xl mx-auto">Meticulously crafted with premium fabrics and timeless modest elegance.</p>
         </div>
 
@@ -256,94 +259,10 @@ function AbayaShowcase() {
     </section>
   );
 }
-/* Mehndi Services */
-// function MehndiServices() {
-//   const [activeCategory, setActiveCategory] = useState("all");
-//   const categories = [
-//     { id: "all", name: "All Services" },
-//     { id: "bride", name: "Bridal" },
-//     { id: "teenage", name: "Teenage" },
-//     { id: "kids", name: "Kids" }
-//   ];
-
-//   const filteredServices = activeCategory === "all"
-//     ? MEHNDI_SERVICES
-//     : MEHNDI_SERVICES.filter(s => s.category === activeCategory);
-
-//   return (
-//     <section id="mehndi" className="py-24 bg-gradient-to-b from-black via-gray-900 to-gray-800">
-//       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//         {/* Section Header */}
-//         <div className="text-center mb-20 px-4">
-//           <div className="inline-flex items-center justify-center gap-2 bg-amber-500/10 backdrop-blur-sm border border-amber-500/20 rounded-full px-4 py-2 mb-6">
-//             <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
-//             <span className="text-amber-500 text-sm font-medium tracking-wide">TRADITIONAL ART</span>
-//           </div>
-//           <h2 className="text-5xl sm:text-6xl font-serif text-white mb-6 leading-tight text-center">
-//             Professional <span className="text-amber-500 font-medium">Mehndi</span> Art
-//           </h2>
-//           <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed text-center">
-//             Traditional and contemporary mehndi designs by expert artists,
-//             bringing centuries-old artistry to your special occasions
-//           </p>
-//         </div>
-
-//         {/* Category Tabs */}
-//         <div className="flex flex-wrap justify-center gap-3 mb-16">
-//           {categories.map((category) => (
-//             <button
-//               key={category.id}
-//               onClick={() => setActiveCategory(category.id)}
-//               className={`px-7 py-3 rounded-full font-semibold tracking-wide transition-all duration-300 transform hover:scale-105 inline-flex items-center justify-center ${activeCategory === category.id
-//                 ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-black shadow-lg shadow-amber-500/25 border-0'
-//                 : 'bg-gray-800 text-gray-300 hover:bg-gray-700 border-2 border-gray-700 hover:border-amber-500/30'
-//                 }`}
-//             >
-//               {category.name}
-//             </button>
-//           ))}
-//         </div>
-
-//         {/* Services Grid */}
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-//           {filteredServices.map((service) => (
-//             <div key={service.id} className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-amber-500/20 transition-all duration-700 group border border-gray-700 hover:border-amber-500/30 transform hover:-translate-y-2">
-//               {/* Image */}
-//               <div className="aspect-[4/3] overflow-hidden bg-gradient-to-br from-gray-900 to-black relative">
-//                 <img
-//                   src={service.image}
-//                   alt={service.title}
-//                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-//                 />
-//                 <div className="absolute top-4 right-4 bg-gradient-to-r from-amber-500 to-amber-600 text-black px-3 py-1.5 rounded-full text-xs font-bold shadow-lg">
-//                   {service.handType === "hand" ? "✋ Hands" : "🦶 Legs"}
-//                 </div>
-//                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-//               </div>
-
-//               {/* Content */}
-//               <div className="p-6 bg-gradient-to-br from-gray-800 to-gray-900 flex flex-col h-full">
-//                 <h3 className="text-xl font-serif text-white mb-2 group-hover:text-amber-500 transition-colors duration-300 leading-tight">{service.title}</h3>
-//                 <p className="text-gray-400 text-sm mb-3 italic">{service.urdu}</p>
-//                 <p className="text-gray-300 text-sm mb-6 leading-relaxed flex-grow">{service.desc}</p>
-//                 <div className="flex justify-between items-center pt-4 border-t border-gray-700 mt-auto">
-//                   <span className="text-2xl font-serif text-amber-500 font-light leading-none">{service.price}</span>
-//                   <PrimaryButton size="sm" onClick={() => window.open("https://wa.me/923000000000", "_blank")}>
-//                     Book Now
-//                   </PrimaryButton>
-//                 </div>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </section>
-//   );
-// }
-
 
 function MehndiServices() {
   const [activeCategory, setActiveCategory] = useState("all");
+  const [selectedMehndi, setSelectedMehndi] = useState<any>(null);
 
   const categories = [
     { id: "all", name: "All Services" },
@@ -357,13 +276,13 @@ function MehndiServices() {
     : MEHNDI_SERVICES.filter(s => s.category === activeCategory);
 
   return (
-    <section id="mehndi" className="py-28 bg-gradient-to-b from-black to-gray-950">
+    <section id="mehndi" className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-black to-gray-950">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-full px-5 py-2 mb-6">
             <span className="text-amber-500 text-sm font-medium tracking-widest">TRADITIONAL ART</span>
           </div>
-          <h2 className="font-serif text-6xl text-white">Professional Mehndi Art</h2>
+          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-white">Professional Mehndi Art</h2>
           <p className="mt-4 text-gray-400 max-w-2xl mx-auto">Traditional and contemporary designs by expert artists.</p>
         </div>
 
@@ -391,7 +310,8 @@ function MehndiServices() {
               transition={{ duration: 0.6, delay: index * 0.08 }}
               viewport={{ once: true }}
               whileHover={{ scale: 1.03 }}
-              className="bg-gray-900 border border-gray-800 hover:border-amber-500/40 rounded-3xl overflow-hidden transition-all duration-500"
+              onClick={() => setSelectedMehndi(service)}
+              className="bg-gray-900 border border-gray-800 hover:border-amber-500/40 rounded-3xl overflow-hidden transition-all duration-500 cursor-pointer"
             >
               <div className="aspect-[4/3] overflow-hidden relative">
                 <img src={service.image} alt={service.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
@@ -416,6 +336,8 @@ function MehndiServices() {
           ))}
         </div>
       </div>
+
+      <ProductModal product={selectedMehndi} onClose={() => setSelectedMehndi(null)} />
     </section>
   );
 }
@@ -424,15 +346,48 @@ function MehndiServices() {
 
 /* ─── TESTIMONIALS ─────────────────────────────────────────────── */
 function Testimonials() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const visibleTestimonials = TESTIMONIALS.slice(0, 6);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % visibleTestimonials.length);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [visibleTestimonials.length]);
+
+  const getCardStyle = (index: number) => {
+    const diff = index - activeIndex;
+    const normalizedDiff = ((diff + visibleTestimonials.length) % visibleTestimonials.length);
+    
+    // Mobile detection based on viewport width
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const offset = isMobile ? 280 : 380;
+    const farOffset = isMobile ? 520 : 720;
+    
+    if (normalizedDiff === 0) {
+      return { x: 0, scale: 1, opacity: 1, zIndex: 30 };
+    } else if (normalizedDiff === 1 || normalizedDiff === -5) {
+      return { x: offset, scale: 0.82, opacity: 0.4, zIndex: 20 };
+    } else if (normalizedDiff === 2 || normalizedDiff === -4) {
+      return { x: farOffset, scale: 0.65, opacity: 0.15, zIndex: 10 };
+    } else if (normalizedDiff === visibleTestimonials.length - 1 || normalizedDiff === -1) {
+      return { x: -offset, scale: 0.82, opacity: 0.4, zIndex: 20 };
+    } else if (normalizedDiff === visibleTestimonials.length - 2 || normalizedDiff === -2) {
+      return { x: -farOffset, scale: 0.65, opacity: 0.15, zIndex: 10 };
+    }
+    return { x: 0, scale: 0.5, opacity: 0, zIndex: 0 };
+  };
+
   return (
-    <section className="py-28 bg-gradient-to-b from-gray-950 to-black">
+    <section className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-gray-950 to-black overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 rounded-full px-6 py-2.5 mb-6">
             <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
             <span className="text-amber-500 text-sm font-medium tracking-widest">CLIENT LOVE</span>
           </div>
-          <h2 className="font-serif text-6xl text-white tracking-tight">
+          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-white tracking-tight">
             What Our <span className="text-amber-500">Clients</span> Say
           </h2>
           <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
@@ -440,35 +395,75 @@ function Testimonials() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
-          {TESTIMONIALS.map((testimonial, index) => (
-            <motion.div
+        {/* 3D Carousel Container */}
+        <div className="relative h-[380px] sm:h-[420px] flex items-center justify-center" style={{ perspective: "1200px" }}>
+          <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md flex items-center justify-center px-4 sm:px-0">
+            {visibleTestimonials.map((testimonial, index) => {
+              const style = getCardStyle(index);
+              return (
+                <motion.div
+                  key={index}
+                  animate={{
+                    x: style.x,
+                    scale: style.scale,
+                    opacity: style.opacity,
+                    zIndex: style.zIndex,
+                    rotateY: style.x * 0.04,
+                  }}
+                  transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
+                  className="absolute top-1/2 left-0 right-0 mx-auto w-full max-w-md -translate-y-1/2"
+                  style={{ zIndex: style.zIndex }}
+                >
+                  <div className={`bg-gray-900/95 backdrop-blur-md border-2 ${index === activeIndex ? 'border-amber-500/60 shadow-amber-500/20' : 'border-gray-700/50'} rounded-3xl p-6 sm:p-8 md:p-10 flex flex-col h-[340px] sm:h-[360px] md:h-[380px] transition-all duration-500 shadow-2xl`}>
+                    {/* Quote Icon */}
+                    <div className="text-amber-500/30 text-5xl font-serif text-center mb-4 leading-none">"</div>
+
+                    <div className="flex mb-6 gap-1.5 justify-center">
+                      {[...Array(5)].map((_, i) => (
+                        <motion.span 
+                          key={i} 
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: i * 0.08 }}
+                          className="text-amber-500 text-lg"
+                        >
+                          ★
+                        </motion.span>
+                      ))}
+                    </div>
+
+                    <p className="text-gray-300 text-base leading-[1.8] italic flex-grow text-center px-2">
+                      {testimonial.text}
+                    </p>
+
+                    <div className="mt-8 pt-8 border-t border-gray-700/50 text-center">
+                      <div className="font-semibold text-white text-lg tracking-wide">{testimonial.name}</div>
+                      <div className="text-sm text-gray-400 flex items-center justify-center gap-2 mt-2">
+                        <span className="w-2 h-2 bg-amber-500 rounded-full" />
+                        {testimonial.city}
+                        <span className="text-gray-600">•</span>
+                        <span className="text-amber-500/80">{testimonial.service}</span>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Navigation Dots */}
+        <div className="flex justify-center gap-3 mt-10">
+          {visibleTestimonials.map((_, index) => (
+            <button
               key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -8 }}
-              className="bg-gray-900/80 border border-gray-800 hover:border-amber-500/40 rounded-3xl p-10 flex flex-col h-full transition-all duration-500 group"
-            >
-              <div className="flex mb-8 gap-1 justify-center">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-amber-500 text-2xl">★</span>
-                ))}
-              </div>
-
-              <p className="text-gray-300 text-[17px] leading-relaxed italic flex-grow group-hover:text-gray-100 transition-colors">
-                "{testimonial.text}"
-              </p>
-
-              <div className="mt-10 pt-8 border-t border-gray-800 text-center">
-                <div className="font-medium text-white text-lg">{testimonial.name}</div>
-                <div className="text-sm text-gray-500 flex items-center justify-center gap-2 mt-1">
-                  <span className="w-1.5 h-1.5 bg-amber-500 rounded-full" />
-                  {testimonial.city} • {testimonial.service}
-                </div>
-              </div>
-            </motion.div>
+              onClick={() => setActiveIndex(index)}
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                index === activeIndex 
+                  ? 'bg-amber-500 w-8' 
+                  : 'bg-gray-700 hover:bg-gray-600'
+              }`}
+            />
           ))}
         </div>
       </div>
@@ -479,7 +474,7 @@ function Testimonials() {
 /* ─── CTA SECTION - REFINED (More Elegant) ──────────────────────────────── */
 function CTASection() {
   return (
-    <section className="py-28 bg-gradient-to-br from-amber-700 via-amber-600 to-amber-700 relative overflow-hidden">
+    <section className="py-16 sm:py-20 md:py-28 bg-gradient-to-br from-amber-700 via-amber-600 to-amber-700 relative overflow-hidden">
       {/* Subtle Pattern */}
       <div className="absolute inset-0 opacity-10 pointer-events-none" 
            style={{
@@ -493,11 +488,11 @@ function CTASection() {
           <span className="text-white text-sm font-medium tracking-widest">GET STARTED TODAY</span>
         </div>
 
-        <h2 className="font-serif text-6xl md:text-7xl text-white leading-tight tracking-tighter mb-8">
+        <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white leading-tight tracking-tighter mb-8">
           Ready to Experience <span className="font-medium">Excellence?</span>
         </h2>
 
-        <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed mb-12">
+        <p className="text-lg sm:text-xl text-white/90 max-w-3xl mx-auto leading-relaxed mb-12 px-4 sm:px-0">
           Get in touch with us today for custom abayas or to book your mehndi appointment. 
           Let us bring your vision to life with expert craftsmanship.
         </p>
@@ -531,7 +526,7 @@ function CTASection() {
 /* ─── FOOTER - REFINED ───────────────────────────────────────────────────── */
 function Footer() {
   return (
-    <footer className="bg-black border-t border-gray-900 py-20">
+    <footer className="bg-black border-t border-gray-900 py-16 sm:py-20">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
           {/* Brand */}
@@ -609,54 +604,55 @@ function Footer() {
 
 /* ─── REFINED ANIMATED MODAL ──────────────────────────────────────────────── */
 function ProductModal({ product, onClose }: { product: any; onClose: () => void }) {
-  if (!product) return null;
-
   useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = "unset"; };
+    if (product) {
+      document.body.style.overflow = "hidden";
+      return () => { document.body.style.overflow = "unset"; };
+    }
   }, [product]);
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl" onClick={onClose}>
+      {product && (
+      <div className="fixed inset-0 z-[50] flex items-center justify-center p-3 sm:p-4 md:p-6 bg-black/60 backdrop-blur-xl" onClick={onClose}>
         <motion.div
           initial={{ opacity: 0, scale: 0.92, y: 40 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.92, y: 30 }}
           transition={{ duration: 0.4, ease: [0.23, 1.0, 0.32, 1] }}
-          className="bg-gray-900 rounded-3xl max-w-5xl w-full overflow-hidden shadow-2xl"
+          className="bg-gray-900 rounded-2xl sm:rounded-3xl max-w-5xl w-full max-h-[90vh] sm:max-h-[85vh] md:max-h-[80vh] overflow-hidden shadow-2xl"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="grid md:grid-cols-2">
+          <div className="grid md:grid-cols-2 h-full md:h-[600px]">
             {/* Image */}
-            <div className="aspect-[4/5] overflow-hidden relative">
-              <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-              {product.tag && (
-                <div className="absolute top-6 left-6 bg-amber-500 text-black px-5 py-2 rounded-full text-sm font-bold">
-                  {product.tag}
+            <div className="h-48 sm:h-64 md:h-full overflow-hidden relative">
+              <img src={product.image} alt={product.name || product.title} className="w-full h-full object-cover" />
+              {(product.tag || product.handType) && (
+                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 md:top-6 md:left-6 bg-amber-500 text-black px-3 py-1 sm:px-4 sm:py-1.5 md:px-5 md:py-2 rounded-full text-xs sm:text-sm font-bold">
+                  {product.tag || (product.handType === "hand" ? "Hands" : "Legs")}
                 </div>
               )}
             </div>
 
             {/* Content */}
-            <div className="p-12 flex flex-col">
-              <button onClick={onClose} className="absolute top-8 right-8 text-3xl text-gray-400 hover:text-white transition">✕</button>
+            <div className="p-5 sm:p-6 md:p-8 lg:p-12 flex flex-col relative overflow-y-auto">
+              <button onClick={onClose} className="absolute top-4 right-4 sm:top-5 sm:right-5 md:top-6 md:right-6 lg:top-8 lg:right-8 text-2xl sm:text-3xl text-gray-400 hover:text-white transition z-10">✕</button>
 
-              <div className="flex-1">
-                <h2 className="font-serif text-4xl text-white mb-3">{product.name}</h2>
-                <p className="text-2xl text-amber-500 mb-2">{product.urdu}</p>
-                <p className="text-gray-400">{product.fabric}</p>
+              <div className="flex-1 pr-8">
+                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-2 sm:mb-3">{product.name || product.title}</h2>
+                <p className="text-lg sm:text-xl md:text-2xl text-amber-500 mb-2">{product.urdu}</p>
+                <p className="text-sm sm:text-base text-gray-400 leading-relaxed">{product.fabric || product.desc}</p>
 
-                <div className="mt-12">
-                  <p className="text-5xl font-light text-amber-500">{product.price}</p>
+                <div className="mt-6 sm:mt-8 md:mt-12">
+                  <p className="text-3xl sm:text-4xl md:text-5xl font-light text-amber-500">{product.price}</p>
                 </div>
               </div>
 
-              <div className="mt-auto pt-12 space-y-4">
-                <PrimaryButton size="lg" className="w-full py-4 text-lg" onClick={() => window.open("https://wa.me/923000000000", "_blank")}>
-                  Order on WhatsApp
+              <div className="mt-6 sm:mt-8 md:mt-auto pt-6 sm:pt-8 md:pt-12 space-y-3 sm:space-y-4">
+                <PrimaryButton size="lg" className="w-full py-3 sm:py-4 text-base sm:text-lg" onClick={() => window.open("https://wa.me/923000000000", "_blank")}>
+                  {product.fabric ? "Order on WhatsApp" : "Book on WhatsApp"}
                 </PrimaryButton>
-                <SecondaryButton size="lg" className="w-full py-4 text-lg" onClick={onClose}>
+                <SecondaryButton size="lg" className="w-full py-3 sm:py-4 text-base sm:text-lg" onClick={onClose}>
                   Continue Shopping
                 </SecondaryButton>
               </div>
@@ -664,6 +660,7 @@ function ProductModal({ product, onClose }: { product: any; onClose: () => void 
           </div>
         </motion.div>
       </div>
+      )}
     </AnimatePresence>
   );
 }
