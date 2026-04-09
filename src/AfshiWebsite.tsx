@@ -23,7 +23,7 @@ function AnimatedHeroText() {
 
   const shown = anim && next !== null ? next : idx;
   return (
-    <span className="inline-flex items-baseline gap-2 overflow-hidden">
+    <span className="inline-flex flex-wrap items-baseline gap-1 sm:gap-2 overflow-hidden justify-center">
       <span>Where</span>
       <span className="overflow-hidden h-[1.2em]">
         <motion.span
@@ -222,7 +222,7 @@ function Hero() {
             <span className="text-amber-400 text-sm font-medium tracking-widest">EID COLLECTION 2026</span>
           </div>
 
-          <h1 className="font-serif text-6xl md:text-7xl lg:text-[5.8rem] leading-none text-white mb-6 tracking-tighter min-h-[1.2em]">
+          <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.8rem] leading-none text-white mb-6 tracking-tighter min-h-[1.2em]">
             <AnimatedHeroText />
           </h1>
 
