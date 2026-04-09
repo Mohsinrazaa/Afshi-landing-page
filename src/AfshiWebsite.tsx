@@ -1,6 +1,56 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+function AnimatedHeroText() {
+  const phrases = [
+    { amber: "Elegance", rest: " Meets Art" },
+    { amber: "Beauty", rest: " Meets Craft" },
+    { amber: "Style", rest: " Meets Culture" },
+  ];
+  const [idx, setIdx]     = useState(0);
+  const [next, setNext]   = useState<number|null>(null);
+  const [anim, setAnim]   = useState(false);
+
+  useEffect(() => {
+    const t = setInterval(() => {
+      const ni = (idx + 1) % phrases.length;
+      setNext(ni);
+      setAnim(true);
+      setTimeout(() => { setIdx(ni); setNext(null); setAnim(false); }, 400);
+    }, 3200);
+    return () => clearInterval(t);
+  }, [idx]);
+
+  const shown = anim && next !== null ? next : idx;
+  return (
+    <span className="inline-flex items-baseline gap-2 overflow-hidden">
+      <span>Where</span>
+      <span className="overflow-hidden h-[1.2em]">
+        <motion.span
+          key={shown}
+          initial={{ y: '100%', opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type:'spring', stiffness:300, damping:22 }}
+          className="block text-amber-500"
+        >
+          {phrases[shown].amber}
+        </motion.span>
+      </span>
+      <span className="overflow-hidden h-[1.2em]">
+        <motion.span
+          key={shown}
+          initial={{ y: '100%', opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type:'spring', stiffness:300, damping:22, delay:.05 }}
+          className="block"
+        >
+          {phrases[shown].rest}
+        </motion.span>
+      </span>
+    </span>
+  );
+}
+
 /* ─── DATA ───────────────────────────────────────────────────────────────────── */
 const ABAYAS = [
   { id: 1, name: "Midnight Elegance", urdu: "نائٹ ایلیگینس", price: "PKR 8,500", fabric: "Premium Nida", image: "/abayas/1.jpeg", tag: "NEW" },
@@ -172,8 +222,8 @@ function Hero() {
             <span className="text-amber-400 text-sm font-medium tracking-widest">EID COLLECTION 2026</span>
           </div>
 
-          <h1 className="font-serif text-6xl md:text-7xl lg:text-[5.8rem] leading-none text-white mb-6 tracking-tighter">
-            Where <span className="text-amber-500">Elegance</span> Meets Tradition
+          <h1 className="font-serif text-6xl md:text-7xl lg:text-[5.8rem] leading-none text-white mb-6 tracking-tighter min-h-[1.2em]">
+            <AnimatedHeroText />
           </h1>
 
           <p className="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto font-light">
@@ -188,7 +238,6 @@ function Hero() {
               Book Mehndi
             </SecondaryButton>
           </div>
-
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {[
               { number: "2K+", label: "Happy Clients" },
@@ -203,6 +252,7 @@ function Hero() {
             ))}
           </div>
         </motion.div>
+
       </div>
     </section>
   );
@@ -219,7 +269,7 @@ function AbayaShowcase() {
           <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-full px-5 py-2 mb-6">
             <span className="text-amber-500 text-sm font-medium tracking-widest">NEW COLLECTION</span>
           </div>
-          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-white">Premium Abayas</h2>
+          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-white">Premium <span className="text-amber-500">Abayas</span></h2>
           <p className="mt-4 text-gray-400 max-w-2xl mx-auto">Meticulously crafted with premium fabrics and timeless modest elegance.</p>
         </div>
 
@@ -282,7 +332,7 @@ function MehndiServices() {
           <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-full px-5 py-2 mb-6">
             <span className="text-amber-500 text-sm font-medium tracking-widest">TRADITIONAL ART</span>
           </div>
-          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-white">Professional Mehndi Art</h2>
+          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-white">Professional <span className="text-amber-500">Mehndi</span> Art</h2>
           <p className="mt-4 text-gray-400 max-w-2xl mx-auto">Traditional and contemporary designs by expert artists.</p>
         </div>
 
