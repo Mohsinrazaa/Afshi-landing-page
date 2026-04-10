@@ -98,26 +98,32 @@ type ButtonProps = {
   onClick?: () => void;
   size?: ButtonSize;
   className?: string;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 };
 
-function PrimaryButton({ children, onClick, size = "md", className = "" }: ButtonProps) {
+function PrimaryButton({ children, onClick, size = "md", className = "", type = "button", disabled = false }: ButtonProps) {
   const sizes: Record<ButtonSize, string> = { sm: "px-6 py-2.5 text-sm", md: "px-8 py-3 text-base", lg: "px-10 py-4 text-lg" };
   return (
     <button
+      type={type}
       onClick={onClick}
-      className={`${sizes[size]} inline-flex items-center justify-center bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-700 hover:to-amber-600 text-white font-semibold tracking-wide rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 ${className}`}
+      disabled={disabled}
+      className={`${sizes[size]} inline-flex items-center justify-center bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-700 hover:to-amber-600 text-white font-semibold tracking-wide rounded-full transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 ${className}`}
     >
       {children}
     </button>
   );
 }
 
-function SecondaryButton({ children, onClick, size = "md", className = "" }: ButtonProps) {
+function SecondaryButton({ children, onClick, size = "md", className = "", type = "button", disabled = false }: ButtonProps) {
   const sizes: Record<ButtonSize, string> = { sm: "px-6 py-2.5 text-sm", md: "px-8 py-3 text-base", lg: "px-10 py-4 text-lg" };
   return (
     <button
+      type={type}
       onClick={onClick}
-      className={`${sizes[size]} inline-flex items-center justify-center border-2 border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white font-semibold tracking-wide rounded-full transition-all duration-300 ${className}`}
+      disabled={disabled}
+      className={`${sizes[size]} inline-flex items-center justify-center border-2 border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white font-semibold tracking-wide rounded-full transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-amber-500 ${className}`}
     >
       {children}
     </button>
@@ -125,7 +131,7 @@ function SecondaryButton({ children, onClick, size = "md", className = "" }: But
 }
 
 /* ─── NAVIGATION ─────────────────────────────────────────────────────────── */
-function Navigation() {
+function Navigation({ onContactOpen }: { onContactOpen: () => void }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -140,11 +146,15 @@ function Navigation() {
     { name: "Abayas", href: "#abayas" },
     { name: "Mehndi", href: "#mehndi" },
     { name: "About", href: "#about" },
-    { name: "Contact", href: "#contact" },
+    { name: "Contact", action: "contact" },
   ];
 
-  const handleScrollTo = (id: string) => {
-    document.querySelector(id)?.scrollIntoView({ behavior: "smooth" });
+  const handleNavClick = (item: any) => {
+    if (item.action === "contact") {
+      onContactOpen();
+    } else {
+      document.querySelector(item.href)?.scrollIntoView({ behavior: "smooth" });
+    }
     setMobileMenuOpen(false);
   };
 
@@ -152,7 +162,7 @@ function Navigation() {
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? "bg-black/95 backdrop-blur-2xl border-b border-amber-500/30 py-4 shadow-2xl" : "bg-transparent py-6"}`}>
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          <div onClick={() => handleScrollTo("#home")} className="flex items-center gap-3 cursor-pointer group">
+          <div onClick={() => document.querySelector("#home")?.scrollIntoView({ behavior: "smooth" })} className="flex items-center gap-3 cursor-pointer group">
             <div className="w-11 h-11 bg-gradient-to-br from-amber-500 to-amber-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition">
               <span className="text-white font-serif text-3xl font-light">A</span>
             </div>
@@ -164,7 +174,7 @@ function Navigation() {
 
           <div className="hidden lg:flex items-center gap-10 text-sm font-medium tracking-widest text-gray-300">
             {navItems.map((item) => (
-              <button key={item.name} onClick={() => handleScrollTo(item.href)} className="hover:text-amber-500 transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-px after:bg-amber-500 after:w-0 hover:after:w-full after:transition-all">
+              <button key={item.name} onClick={() => handleNavClick(item)} className="hover:text-amber-500 transition-colors relative after:absolute after:bottom-0 after:left-0 after:h-px after:bg-amber-500 after:w-0 hover:after:w-full after:transition-all">
                 {item.name}
               </button>
             ))}
@@ -186,7 +196,7 @@ function Navigation() {
           <div className="fixed inset-0 bg-black/95 z-40 lg:hidden pt-24">
             <div className="flex flex-col items-center gap-8 text-xl py-10">
               {navItems.map((item) => (
-                <button key={item.name} onClick={() => handleScrollTo(item.href)} className="text-gray-200 hover:text-amber-500">
+                <button key={item.name} onClick={() => handleNavClick(item)} className="text-gray-200 hover:text-amber-500">
                   {item.name}
                 </button>
               ))}
@@ -266,7 +276,8 @@ function AbayaShowcase() {
     <section id="abayas" className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-gray-950 to-black">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-full px-5 py-2 mb-6">
+          <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 rounded-full px-6 py-2.5 mb-6">
+            <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
             <span className="text-amber-500 text-sm font-medium tracking-widest">NEW COLLECTION</span>
           </div>
           <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-white">Premium <span className="text-amber-500">Abayas</span></h2>
@@ -329,7 +340,8 @@ function MehndiServices() {
     <section id="mehndi" className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-black to-gray-950">
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/20 rounded-full px-5 py-2 mb-6">
+          <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 rounded-full px-6 py-2.5 mb-6">
+            <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
             <span className="text-amber-500 text-sm font-medium tracking-widest">TRADITIONAL ART</span>
           </div>
           <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-white">Professional <span className="text-amber-500">Mehndi</span> Art</h2>
@@ -715,6 +727,199 @@ function ProductModal({ product, onClose }: { product: any; onClose: () => void 
   );
 }
 
+/* ─── ABOUT SECTION ───────────────────────────────────────────────────────── */
+function AboutSection() {
+  return (
+    <section id="about" className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-black to-gray-950">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 bg-amber-500/10 border border-amber-500/30 rounded-full px-6 py-2.5 mb-6">
+            <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
+            <span className="text-amber-500 text-sm font-medium tracking-widest">OUR STORY</span>
+          </div>
+          <h2 className="font-serif text-4xl sm:text-5xl md:text-6xl text-white tracking-tight mb-4">
+            About <span className="text-amber-500">Afshi</span>
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto text-lg">
+            Where tradition meets elegance in every stitch
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div>
+            <h3 className="font-serif text-2xl sm:text-3xl text-white mb-6">Our Journey</h3>
+            <p className="text-gray-400 leading-relaxed mb-6">
+              Afshi was born from a passion for preserving the beauty of Pakistani culture while embracing modern elegance. We believe that modest fashion should never compromise on style, and every abaya we create tells a story of craftsmanship and dedication.
+            </p>
+            <p className="text-gray-400 leading-relaxed mb-6">
+              Our mehndi artists bring years of expertise, blending traditional techniques with contemporary designs to create stunning patterns for every occasion - from intimate gatherings to grand celebrations.
+            </p>
+            <div className="grid grid-cols-3 gap-6 mt-10">
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl font-serif text-amber-500 mb-2">5+</div>
+                <div className="text-sm text-gray-400">Years Experience</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl font-serif text-amber-500 mb-2">2K+</div>
+                <div className="text-sm text-gray-400">Happy Clients</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl font-serif text-amber-500 mb-2">100%</div>
+                <div className="text-sm text-gray-400">Handcrafted</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 hover:border-amber-500/40 transition-all duration-300">
+              <div className="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center mb-4">
+                <span className="text-2xl">✨</span>
+              </div>
+              <h4 className="font-semibold text-white mb-2">Premium Quality</h4>
+              <p className="text-sm text-gray-400">Only the finest fabrics for our abayas</p>
+            </div>
+            <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 hover:border-amber-500/40 transition-all duration-300">
+              <div className="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center mb-4">
+                <span className="text-2xl">🎨</span>
+              </div>
+              <h4 className="font-semibold text-white mb-2">Custom Designs</h4>
+              <p className="text-sm text-gray-400">Tailored to your unique preferences</p>
+            </div>
+            <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 hover:border-amber-500/40 transition-all duration-300">
+              <div className="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center mb-4">
+                <span className="text-2xl">💝</span>
+              </div>
+              <h4 className="font-semibold text-white mb-2">Bridal Expert</h4>
+              <p className="text-sm text-gray-400">Specialized in bridal mehndi art</p>
+            </div>
+            <div className="bg-gray-900/50 border border-gray-800 rounded-2xl p-6 hover:border-amber-500/40 transition-all duration-300">
+              <div className="w-12 h-12 bg-amber-500/20 rounded-xl flex items-center justify-center mb-4">
+                <span className="text-2xl">🌟</span>
+              </div>
+              <h4 className="font-semibold text-white mb-2">Satisfaction</h4>
+              <p className="text-sm text-gray-400">100% client satisfaction guarantee</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── CONTACT MODAL ───────────────────────────────────────────────────────── */
+function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    // Simulate form submission
+    setTimeout(() => {
+      setIsSubmitting(false);
+      alert('Thank you for your message! We will get back to you soon.');
+      onClose();
+      setFormData({ name: '', email: '', phone: '', message: '' });
+    }, 1500);
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-xl" onClick={onClose}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: 40 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.92, y: 30 }}
+            transition={{ duration: 0.4, ease: [0.23, 1.0, 0.32, 1] }}
+            className="bg-gray-900 rounded-2xl sm:rounded-3xl max-w-lg w-full max-h-[90vh] overflow-hidden shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-6 sm:p-8 md:p-10">
+              <div className="flex justify-between items-center mb-8">
+                <h2 className="font-serif text-2xl sm:text-3xl text-white">Contact Us</h2>
+                <button onClick={onClose} className="text-gray-400 hover:text-white transition text-2xl">✕</button>
+              </div>
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label className="block text-sm text-gray-400 mb-2">Name</label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:border-amber-500 focus:outline-none transition"
+                    placeholder="Your name"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm text-gray-400 mb-2">Email</label>
+                  <input
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:border-amber-500 focus:outline-none transition"
+                    placeholder="your@email.com"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm text-gray-400 mb-2">Phone (Optional)</label>
+                  <input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:border-amber-500 focus:outline-none transition"
+                    placeholder="+92 3XX XXXXXXX"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm text-gray-400 mb-2">Message</label>
+                  <textarea
+                    required
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    rows={4}
+                    className="w-full bg-gray-800 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:border-amber-500 focus:outline-none transition resize-none"
+                    placeholder="Tell us about your requirements..."
+                  />
+                </div>
+
+                <PrimaryButton
+                  type="submit"
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </PrimaryButton>
+              </form>
+
+              <div className="mt-6 pt-6 border-t border-gray-800 text-center">
+                <p className="text-gray-400 text-sm mb-3">Or reach us directly</p>
+                <a
+                  href="https://wa.me/923000000000"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-green-500 hover:text-green-400 transition"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                  </svg>
+                  WhatsApp
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+}
+
 /* WhatsApp Float Button */
 function WhatsAppFloat() {
   return (
@@ -731,6 +936,8 @@ function WhatsAppFloat() {
 
 /* Main Component */
 export default function AfshiWebsite() {
+  const [contactModalOpen, setContactModalOpen] = useState(false);
+
   return (
     <div className="min-h-screen w-full bg-black text-white overflow-x-hidden">
       <FontLoader />
@@ -744,14 +951,16 @@ export default function AfshiWebsite() {
         }
       `}</style>
 
-      <Navigation />
+      <Navigation onContactOpen={() => setContactModalOpen(true)} />
       <Hero />
       <AbayaShowcase />
       <MehndiServices />
       <Testimonials />
+      <AboutSection />
       <CTASection />
       <Footer />
       <WhatsAppFloat />
+      <ContactModal isOpen={contactModalOpen} onClose={() => setContactModalOpen(false)} />
     </div>
   );
 }
